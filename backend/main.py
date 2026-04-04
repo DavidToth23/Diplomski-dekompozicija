@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List
@@ -39,6 +39,26 @@ class SchemaOutput(BaseModel):
     functional_dependencies: List[dict]  # stringovani prikaz
     summary: str                         # citljivi sazetak
 
+def validate_fd_attributes(attributes: set, fds: List[FunctionalDependency]):
+    """
+    Proverava da li se sva obeležja u FZ-ovima nalaze u skupu obeležja relacije.
+    Ako ne, baca HTTPException sa porukom koja tačno navodi koji atribut nedostaje
+    i u kojoj FZ-i se pojavljuje.
+    """
+    for fd in fds:
+        all_fd_attrs = set(fd.lhs) | set(fd.rhs)  # unija leve i desne strane
+        unknown = all_fd_attrs - attributes         # atributi koji nisu u shemi
+
+        if unknown:
+            fd_display = f"{', '.join(sorted(fd.lhs))} → {', '.join(sorted(fd.rhs))}"
+            raise HTTPException(
+                status_code=422,
+                detail=(
+                    f"Funkcionalna zavisnost '{fd_display}' sadrži obeležja "
+                    f"{sorted(unknown)} koja nisu u skupu obeležja relacije."
+                )
+            )
+
 @app.post("/api/schema", response_model=SchemaOutput)
 def process_schema(data: SchemaInput):
     """
@@ -47,6 +67,10 @@ def process_schema(data: SchemaInput):
     
     # Sortiramo obelezja
     sorted_attrs = sorted(set(data.attributes))
+    attrs_set = set(sorted_attrs)
+    
+    # Sva obelezja u fz moraju biti u skupu obelezja
+    validate_fd_attributes(attrs_set, data.functional_dependencies)
 
     # Normalizujemo i formatiramo FZ-ove
     formatted_fds = []
