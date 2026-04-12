@@ -17,12 +17,20 @@ This tool takes a set of functional dependencies as input and walks through the 
 ```
 projekat/
 ├── backend/
-│   ├── main.py            # FastAPI server
-│   └── requirements.txt   # Python dependencies
+│   ├── algorithm/
+│   │   ├── __init__.py
+│   │   └── closure.py         # attribute_closure, is_superkey
+│   ├── tests/
+│   │   └── test_closure.py    # unit tests for closure.py
+│   ├── conftest.py            # pytest path configuration
+│   ├── main.py                # FastAPI server
+│   ├── models.py              # Pydantic models
+│   ├── validation.py          # Input validation
+│   └── requirements.txt       # Python dependencies
 └── frontend/
     ├── src/
-    │   ├── App.jsx        # Main React component
-    │   └── main.jsx       # Entry point
+    │   ├── App.jsx            # Main React component
+    │   └── main.jsx           # Entry point
     ├── index.html
     ├── package.json
     └── vite.config.js
