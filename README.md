@@ -10,6 +10,7 @@ This tool takes a set of functional dependencies as input and walks through the 
 
 - **Backend:** Python, FastAPI, Pydantic
 - **Frontend:** React, Vite
+- **Testing:** pytest
 
 ## Project Structure
 
@@ -58,3 +59,16 @@ npm run dev
 ```
 
 Frontend runs at: `http://localhost:5173`
+
+## Running Tests
+
+```bash
+cd backend
+pytest tests/
+```
+
+For detailed output:
+
+```bash
+pytest tests/ -v
+```
