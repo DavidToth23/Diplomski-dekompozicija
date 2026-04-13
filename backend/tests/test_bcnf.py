@@ -1,4 +1,4 @@
-from algorithm.bcnf import project_fds, find_bcnf_violation, is_bcnf
+from algorithm.normal_forms import project_fds, find_bcnf_violation, is_bcnf
 
 FDS = [
     (frozenset({"A", "B"}), frozenset({"C"})),

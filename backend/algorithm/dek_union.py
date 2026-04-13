@@ -1,6 +1,6 @@
 from typing import List, Tuple
 from algorithm.closure import attribute_closure, find_candidate_keys
-from algorithm.bcnf import project_fds
+from algorithm.normal_forms import project_fds
 
 
 def dek_union(

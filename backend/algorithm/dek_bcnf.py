@@ -1,5 +1,5 @@
 from typing import List, Tuple, Set
-from algorithm.bcnf import project_fds, is_bcnf
+from algorithm.normal_forms import project_fds, is_bcnf
 from algorithm.fd_selection import select_fd
 
 

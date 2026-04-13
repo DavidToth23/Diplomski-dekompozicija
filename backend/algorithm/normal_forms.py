@@ -1,5 +1,5 @@
 from typing import List, Tuple, Set
-from algorithm.closure import attribute_closure
+from algorithm.closure import attribute_closure, find_candidate_keys
 
 
 def project_fds(
@@ -62,3 +62,46 @@ def is_bcnf(
     Proverava da li je šema (attrs, fds) u BCNF.
     """
     return find_bcnf_violation(attrs, fds) is None
+
+def find_3nf_violation(
+    attrs: Set[str],
+    fds: List[Tuple[frozenset, frozenset]]
+) -> Tuple[frozenset, frozenset] | None:
+    """
+    Vraća prvu FZ koja krši 3NF, ili None ako je šema u 3NF.
+
+    FZ X→Y krši 3NF ako:
+      1. nije trivijalna (Y ⊄ X)
+      2. X nije superključ
+      3. postoji atribut u Y koji nije prime atribut
+    """
+    attrs_frozen = frozenset(attrs)
+    projected = project_fds(attrs, fds)
+
+    candidate_keys = find_candidate_keys(attrs, fds)
+
+    prime_attrs = set()
+    for key in candidate_keys:
+        prime_attrs.update(key)
+
+    for lhs, rhs in projected:
+        is_trivial = rhs.issubset(lhs)
+
+        closure = attribute_closure(lhs, projected)
+        is_superkey = frozenset(closure) >= attrs_frozen
+
+        rhs_all_prime = all(attr in prime_attrs for attr in rhs)
+
+        if not is_trivial and not is_superkey and not rhs_all_prime:
+            return (lhs, rhs)
+
+    return None
+
+def is_3nf(
+    attrs: Set[str],
+    fds: List[Tuple[frozenset, frozenset]]
+) -> bool:
+    """
+    Proverava da li je šema (attrs, fds) u 3NF.
+    """
+    return find_3nf_violation(attrs, fds) is None

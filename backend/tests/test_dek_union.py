@@ -1,5 +1,5 @@
 from algorithm.dek_union import dek_union
-from algorithm.bcnf import project_fds
+from algorithm.normal_forms import project_fds
 
 # ── Primer 1: šeme sa ekvivalentnim ključevima ───────────────────────────────
 # R(C,B), R(B,D), R(B,E) — sve imaju B kao ključ

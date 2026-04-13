@@ -1,5 +1,5 @@
 from algorithm.dek_bcnf import dek_bcnf
-from algorithm.bcnf import is_bcnf
+from algorithm.normal_forms import is_bcnf
 
 # ── Primer 1: R(A,B,C,D,E), F = {AB→C, C→D, D→E} ───────────────────────────
 # Ključ: AB

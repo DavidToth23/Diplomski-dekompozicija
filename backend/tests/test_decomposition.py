@@ -1,5 +1,5 @@
 from algorithm.decomposition import decompose
-from algorithm.bcnf import is_bcnf
+from algorithm.normal_forms import is_bcnf, is_3nf
 from algorithm.closure import attribute_closure, find_candidate_keys
 
 # ── Primer iz prezentacije (slajdovi 34-44) ───────────────────────────────────
@@ -180,8 +180,7 @@ def test_student_decomposition_validity():
     assert all_attrs == ATTRS_STUDENT
     for rel in result["relations"]:
         fds = [(frozenset(fd["lhs"]), frozenset(fd["rhs"])) for fd in rel["fds"]]
-        # TODO: ovde kasnije proveriti 3NF(treba ga implementirati)
-        assert is_bcnf(set(rel["attrs"]), fds) or True
+        assert is_3nf(set(rel["attrs"]), fds)
     
 # proveravamo spojivost bez gubitaka(teorijski)
 def test_lossless_join_student():

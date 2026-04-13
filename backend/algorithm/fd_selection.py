@@ -1,6 +1,6 @@
 from typing import List, Tuple, Set
 from algorithm.closure import attribute_closure
-from algorithm.bcnf import project_fds
+from algorithm.normal_forms import project_fds
 
 
 def check_p3(
