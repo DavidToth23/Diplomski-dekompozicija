@@ -1,4 +1,4 @@
-from algorithm.normal_forms import project_fds, find_bcnf_violation, is_bcnf
+from algorithm.normal_forms import project_fds, find_bcnf_violation, is_bcnf, find_3nf_violation, is_3nf
 
 FDS = [
     (frozenset({"A", "B"}), frozenset({"C"})),
@@ -78,3 +78,53 @@ def test_is_bcnf_single_attr():
 # prazne FZ — uvek u BCNF
 def test_is_bcnf_empty_fds():
     assert is_bcnf({"A", "B", "C"}, []) == True
+
+# ------------ 3nf ---------------
+
+# R(A,B,C,D,E), AB je ključ, C→D krši 3NF (D nije prime)
+def test_find_3nf_violation_exists():
+    attrs = {"A", "B", "C", "D", "E"}
+    violation = find_3nf_violation(attrs, FDS)
+    assert violation is not None
+    
+# R(A,B,C), AB je ključ, AB→C je OK
+def test_find_3nf_violation_none_superkey():
+    attrs = {"A", "B", "C"}
+    assert find_3nf_violation(attrs, FDS) is None
+
+# FZ: A→B, B→A (A i B su kandidatski ključevi → oba su prime)
+def test_find_3nf_violation_none_prime_rhs():
+    attrs = {"A", "B"}
+    fds = [
+        (frozenset({"A"}), frozenset({"B"})),
+        (frozenset({"B"}), frozenset({"A"})),
+    ]
+    assert find_3nf_violation(attrs, fds) is None
+    
+# R(C,D), C je ključ → OK
+def test_find_3nf_violation_none_cd():
+    attrs = {"C", "D"}
+    assert find_3nf_violation(attrs, FDS) is None
+    
+def test_find_3nf_violation_empty_fds():
+    assert find_3nf_violation({"A", "B", "C"}, []) is None
+    
+def test_is_3nf_false():
+    assert is_3nf({"A", "B", "C", "D", "E"}, FDS) == False
+    
+def test_is_3nf_true_superkey():
+    assert is_3nf({"A", "B", "C"}, FDS) == True
+    
+def test_is_3nf_true_prime_rhs():
+    attrs = {"A", "B"}
+    fds = [
+        (frozenset({"A"}), frozenset({"B"})),
+        (frozenset({"B"}), frozenset({"A"})),
+    ]
+    assert is_3nf(attrs, fds) == True
+    
+def test_is_3nf_single_attr():
+    assert is_3nf({"A"}, FDS) == True
+    
+def test_is_3nf_empty_fds():
+    assert is_3nf({"A", "B", "C"}, []) == True
