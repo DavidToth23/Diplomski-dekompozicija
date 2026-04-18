@@ -22,7 +22,7 @@ def project_fds(
         seen.add(lhs_in_attrs)
 
         closure = attribute_closure(lhs_in_attrs, fds)
-        rhs = frozenset(closure) & attrs_frozen - lhs_in_attrs
+        rhs = frozenset(closure) & (attrs_frozen - lhs_in_attrs)
 
         if rhs:
             result.append((lhs_in_attrs, rhs))
