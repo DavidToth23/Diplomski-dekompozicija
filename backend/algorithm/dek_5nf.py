@@ -9,7 +9,7 @@ eliminišući zavisnosti spajanja (join dependencies — JD) koje krše 5NF.
 
 Algoritam (prema pseudokodu):
     RADI dek_5NF ∀(Ri, Fi) ∈ T  DOK JE T ≠ ∅
-        POSTAVI T ← T \ {(Ri, Fi)}
+        POSTAVI T ← T \\ {(Ri, Fi)}
         AKO JE (∃⊳◁(Y1,...,Yk) ∈ J)
                ((Ri = ⋃Y_l) ∧ (∀Yi ∈ {Y1,...,Yk})(Ri ⊄ (Yi)_Fi⁺)) TADA
             RADI dek ∀Yi ∈ {Y1,...,Yk}

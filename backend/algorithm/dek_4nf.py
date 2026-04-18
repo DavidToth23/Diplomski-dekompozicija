@@ -6,7 +6,7 @@ eliminišući višeznačne zavisnosti koje krše 4NF.
 
 Algoritam (prema pseudokodu):
     RADI dek_4NF ∀(Ri, Fi) ∈ S DOK JE S ≠ ∅
-        POSTAVI S ← S \ {(Ri, Fi)}
+        POSTAVI S ← S \\ {(Ri, Fi)}
         IZRAČUNAJ M|Ri  (projektovane MVD na Ri)
         AKO JE (∃Y ↠→ Z ∈ M|Ri)(Z ⊄ Y) ∧ (Ri bez YZ ≠ ∅) ∧ (Ri ⊄ Y_Fi⁺) TADA
             POSTAVI S ← S ∪ {(YZ, F|YZ), (Y(Ri\Z), F|Y(Ri\Z))}
