@@ -3,6 +3,7 @@ from algorithm.dek_bcnf import dek_bcnf
 from algorithm.dek_union import dek_union
 from algorithm.dek_4nf import dek_4nf
 from algorithm.dek_5nf import dek_5nf
+from algorithm.closure import find_candidate_keys
 
 
 def decompose(
@@ -65,6 +66,7 @@ def decompose(
     # ── Formatiranje rezultata ────────────────────────────────────────────────
     formatted_relations = []
     for rel in current_relations:
+        keys = find_candidate_keys(rel["attrs"], rel["fds"])
         formatted_relations.append({
             "attrs": sorted(rel["attrs"]),
             "fds": [
@@ -77,7 +79,8 @@ def decompose(
                     )
                 }
                 for lhs, rhs in rel["fds"]
-            ]
+            ],
+            "candidate_keys": [sorted(k) for k in keys],
         })
 
     return {
