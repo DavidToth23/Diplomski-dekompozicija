@@ -9,3 +9,8 @@ venv/
 node_modules/
 dist/
 .vite/
+
+# Coverage
+.coverage
+coverage.xml
+htmlcov/
