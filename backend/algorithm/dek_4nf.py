@@ -9,7 +9,7 @@ Algoritam (prema pseudokodu):
         POSTAVI S ← S \\ {(Ri, Fi)}
         IZRAČUNAJ M|Ri  (projektovane MVD na Ri)
         AKO JE (∃Y ↠→ Z ∈ M|Ri)(Z ⊄ Y) ∧ (Ri bez YZ ≠ ∅) ∧ (Ri ⊄ Y_Fi⁺) TADA
-            POSTAVI S ← S ∪ {(YZ, F|YZ), (Y(Ri\Z), F|Y(Ri\Z))}
+            POSTAVI S ← S ∪ {(YZ, F|YZ), (Y(Ri\\Z), F|Y(Ri\\Z))}
         INAČE
             POSTAVI T ← T ∪ {(Ri, Fi)}
         KRAJ AKO
