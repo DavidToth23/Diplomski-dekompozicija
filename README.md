@@ -96,3 +96,19 @@ For detailed output:
 ```bash
 pytest tests/ -v
 ```
+
+## Test Coverage
+
+To measure code coverage, the coverage.py tool was used:
+
+```bash
+coverage run -m pytest tests/
+coverage report -m
+```
+
+A detailed visual coverage report is available in:
+
+```bash
+coverage html
+htmlcov/index.html
+```
